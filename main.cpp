@@ -2,9 +2,9 @@
 com os arquivos header (.hpp). Mas enfim, vamo desenvolver mais pra dps ver mais sobre isso. - Vitor*/
 
 #include <iostream>
-#include "estruturas.hpp"
-#include "buscas.hpp"
-#include "ordenacoes.hpp"
+#include "./headers/estruturas.hpp"
+#include "./headers/buscas.hpp"
+#include "./headers/ordenacoes.hpp"
 
 int main(){
     
