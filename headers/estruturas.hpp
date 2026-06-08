@@ -10,11 +10,12 @@ namespace Estruturas{
 
             Node(int v){
                 valor = v;
-                proximo = NULL;
+                proximo = nullptr;
             }
 
-            Node* HEAD;
         };
+
+        Node* HEAD;
 
     public:
         ListaEncadeada();
@@ -43,7 +44,7 @@ namespace Estruturas{
         ~Fila();
 
         void enqueue(int vlr);
-        int filaVazia();
+        bool filaVazia();
         void showQueue();
         int peek();
         int dequeue();
