@@ -1,51 +1,109 @@
 /**Não recomendo colocar o "using namespace std" aqui, pq pode dar conflito 
 com os arquivos header (.hpp). Mas enfim, vamo desenvolver mais pra dps ver mais sobre isso. - Vitor*/
 #include <string>
+#include <vector>
+#include <chrono>
 #include <iostream>
 #include "./headers/estruturas.hpp"
 #include "./headers/buscas.hpp"
 #include "./headers/ordenacoes.hpp"
 
-void sistemaIngresso(){
-    int opcao;
-    while (true){
-        std::cout << "\n1 - Comprar Ingresso\n"
-                     "2 - Cancelar Compra\n"
-                     "3 - Mostrar Pedido\n"
-                     "4 - Voltar\n"
-                     "Opcao: ";
-
-        std::cin >> opcao;
-
-        if (opcao == 4){
-            std::cout << "\n";
-            return;
-        }
-        if (opcao == 3){
-            std::cout << "\nInsira os dodos do pedido que deseja procurar:\n"
-                         "Nome cadastrado no ingresso: ";
-        }
-        if (opcao == 2){
-
-        }
-        if (opcao == 1){
-            std::cout << "\nEscolha o tipo do ingresso: \n"
-                         "1 - VIP (R$: 859,99)\n"
-                         "2 - Mezanino (R$: 729,99)\n"
-                         "3 - Pista (R$: 689,99)\n"
-                         "4 - Voltar\n"
-                         "Opcao: ";
-            std::cin >> opcao;
-        }
-    }
-}
-
-struct Cliente
+struct ingresso
 {
     std::string nomeCliente;
     double preco;
     std::string tipo; //VIP, Pista, Mesanino
 };
+
+void sistemaIngresso(){
+    int opcao;
+    std::vector<ingresso> lista = {
+        {"Bruno", 859.99, "VIP"},
+        {"Paulo", 689.99, "Pista"},
+        {"Camila", 689.99, "Pista"},
+        {"Maria", 729.99, "Mezanino"}
+    };
+
+    while (true){
+        std::cout << "\n1 - Comprar Ingresso\n"
+                     "2 - Cancelar Compra\n"
+                     "3 - Mostrar Pedido\n"
+                     "0 - Voltar\n"
+                     "Opcao: ";
+
+        std::cin >> opcao;
+
+        if (opcao == 0){
+            std::cout << "\n";
+            return;
+        }
+
+        if (opcao == 1){
+            ingresso novoIngresso;
+            int tipoOpcao;
+
+            std::cout << "Digite o nome do comprador: ";
+            std::getline(std::cin >> std::ws, novoIngresso.nomeCliente);
+
+            std::cout << "\nEscolha o tipo do ingresso:\n"
+                         "1 - VIP (R$: 859,99)\n"
+                         "2 - Mezanino (R$: 729,99)\n"
+                         "3 - Pista (R$: 689,99)\n"
+                         "Opcao: ";
+            std::cin >> tipoOpcao;
+
+            switch (tipoOpcao){
+            case 1:
+                novoIngresso.tipo = "VIP";
+                novoIngresso.preco = 859.99;
+                break;
+            case 2:
+                novoIngresso.tipo = "Mezanino";
+                novoIngresso.preco = 729.99;
+                break;
+            case 3:
+                novoIngresso.tipo = "Pista";
+                novoIngresso.preco = 689.99;
+                break;
+            default:
+                std::cout << "\nTipo de ingresso invalido. Cadastro cancelado." << std::endl;
+                continue;
+            }
+
+            lista.push_back(novoIngresso);
+            std::cout << "\nIngresso cadastrado com sucesso." << std::endl;
+        }
+
+        if (opcao == 2){
+
+        }
+
+        if (opcao == 3){
+            std::string buscarNome;
+            std::cout << "\nInsira os dodos do pedido que deseja procurar:\n"
+                         "Nome cadastrado no ingresso: ";
+            std::getline(std::cin >> std::ws, buscarNome);
+
+            bool encontrado = false;
+
+            for (const ingresso& item : lista){
+                if (item.nomeCliente == buscarNome){
+                    std::cout << "\nIngresso encontrado:" << std::endl;
+                    std::cout << "Nome: " << item.nomeCliente << std::endl;
+                    std::cout << "Preco: R$ " << item.preco << std::endl;
+                    std::cout << "Tipo: " << item.tipo << std::endl;
+                    encontrado = true;
+                    break;
+                }
+            }
+
+            if (!encontrado){
+                std::cout << "\nCliente nao encontrado na lista." << std::endl;
+            }
+
+        }
+    }
+}
 
 
 
