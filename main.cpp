@@ -1,5 +1,3 @@
-/**Não recomendo colocar o "using namespace std" aqui, pq pode dar conflito 
-com os arquivos header (.hpp). Mas enfim, vamo desenvolver mais pra dps ver mais sobre isso. - Vitor*/
 #include <string>
 #include <vector>
 #include <chrono>
@@ -8,16 +6,14 @@ com os arquivos header (.hpp). Mas enfim, vamo desenvolver mais pra dps ver mais
 #include "./headers/buscas.hpp"
 #include "./headers/ordenacoes.hpp"
 
-struct ingresso
-{
-    std::string nomeCliente;
-    double preco;
-    std::string tipo; //VIP, Pista, Mesanino
-};
+
 
 void sistemaIngresso(){
+
+    Estruturas::ListaEncadeada listaEncadeada;
+
     int opcao;
-    std::vector<ingresso> lista = {
+    std::vector<Estruturas::Ingresso> lista = {
         {"Bruno", 859.99, "VIP"},
         {"Paulo", 689.99, "Pista"},
         {"Camila", 689.99, "Pista"},
@@ -39,7 +35,7 @@ void sistemaIngresso(){
         }
 
         if (opcao == 1){
-            ingresso novoIngresso;
+            Estruturas::Ingresso novoIngresso;
             int tipoOpcao;
 
             std::cout << "Digite o nome do comprador: ";
@@ -86,7 +82,7 @@ void sistemaIngresso(){
 
             bool encontrado = false;
 
-            for (const ingresso& item : lista){
+            for (const Estruturas::Ingresso& item : lista){
                 if (item.nomeCliente == buscarNome){
                     std::cout << "\nIngresso encontrado:" << std::endl;
                     std::cout << "Nome: " << item.nomeCliente << std::endl;

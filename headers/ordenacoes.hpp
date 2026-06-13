@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Buscas{
+namespace Ordenacoes{
 
     class BubbleSort{
     public:

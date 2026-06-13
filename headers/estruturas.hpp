@@ -1,38 +1,51 @@
 #pragma once
+#include <string>
 
-namespace Estruturas{
+namespace Estruturas
+{
 
-    class ListaEncadeada{
+    struct Ingresso
+    {
+        std::string nomeCliente;
+        double preco;
+        std::string tipo; // VIP, Pista, Mesanino
+    };
+
+    class ListaEncadeada
+    {
     private:
-        struct Node{
-            int valor;
+        struct Node
+        {
+            Ingresso valor;
             Node *proximo;
 
-            Node(int v){
+            Node(Ingresso v)
+            {
                 valor = v;
                 proximo = nullptr;
             }
-
         };
 
-        Node* HEAD;
+        Node *HEAD;
 
     public:
         ListaEncadeada();
         ~ListaEncadeada();
 
-        void inserirNoInicio(int valor);
-        void inserirNoFinal(int valor);
-        void inserirAposValor(int valorProcurado, int novoValor);
-        void removerElemento(int valor);
+        void inserirNoInicio(Ingresso valor);
+        void inserirNoFinal(Ingresso valor);
+        void inserirAposValor(Ingresso valorProcurado, Ingresso novoValor);
+        void removerElemento(Ingresso valor);
         void exibirLista();
         void liberarLista();
     };
 
-    class Fila{
+    class Fila
+    {
     private:
-        struct No{
-            int dado;
+        struct No
+        {
+            Ingresso dado;
             No *prox;
         };
 
@@ -43,10 +56,10 @@ namespace Estruturas{
         Fila();
         ~Fila();
 
-        void enqueue(int vlr);
+        void enqueue(Ingresso vlr);
         bool filaVazia();
         void showQueue();
-        int peek();
-        int dequeue();
+        Ingresso peek();
+        Ingresso dequeue();
     };
 }
