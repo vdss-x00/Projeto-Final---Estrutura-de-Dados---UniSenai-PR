@@ -1,121 +1,99 @@
-#include <string>
-#include <vector>
-#include <chrono>
 #include <iostream>
-#include "./headers/estruturas.hpp"
-#include "./headers/buscas.hpp"
-#include "./headers/ordenacoes.hpp"
-
-
-
-void sistemaIngresso(){
-
-    Estruturas::ListaEncadeada listaEncadeada;
-
-    int opcao;
-    std::vector<Estruturas::Ingresso> lista = {
-        {"Bruno", 859.99, "VIP"},
-        {"Paulo", 689.99, "Pista"},
-        {"Camila", 689.99, "Pista"},
-        {"Maria", 729.99, "Mezanino"}
-    };
-
-    while (true){
-        std::cout << "\n1 - Comprar Ingresso\n"
-                     "2 - Cancelar Compra\n"
-                     "3 - Mostrar Pedido\n"
-                     "0 - Voltar\n"
-                     "Opcao: ";
-
-        std::cin >> opcao;
-
-        if (opcao == 0){
-            std::cout << "\n";
-            return;
-        }
-
-        if (opcao == 1){
-            Estruturas::Ingresso novoIngresso;
-            int tipoOpcao;
-
-            std::cout << "Digite o nome do comprador: ";
-            std::getline(std::cin >> std::ws, novoIngresso.nomeCliente);
-
-            std::cout << "\nEscolha o tipo do ingresso:\n"
-                         "1 - VIP (R$: 859,99)\n"
-                         "2 - Mezanino (R$: 729,99)\n"
-                         "3 - Pista (R$: 689,99)\n"
-                         "Opcao: ";
-            std::cin >> tipoOpcao;
-
-            switch (tipoOpcao){
-            case 1:
-                novoIngresso.tipo = "VIP";
-                novoIngresso.preco = 859.99;
-                break;
-            case 2:
-                novoIngresso.tipo = "Mezanino";
-                novoIngresso.preco = 729.99;
-                break;
-            case 3:
-                novoIngresso.tipo = "Pista";
-                novoIngresso.preco = 689.99;
-                break;
-            default:
-                std::cout << "\nTipo de ingresso invalido. Cadastro cancelado." << std::endl;
-                continue;
-            }
-
-            lista.push_back(novoIngresso);
-            std::cout << "\nIngresso cadastrado com sucesso." << std::endl;
-        }
-
-        if (opcao == 2){
-
-        }
-
-        if (opcao == 3){
-            std::string buscarNome;
-            std::cout << "\nInsira os dodos do pedido que deseja procurar:\n"
-                         "Nome cadastrado no ingresso: ";
-            std::getline(std::cin >> std::ws, buscarNome);
-
-            bool encontrado = false;
-
-            for (const Estruturas::Ingresso& item : lista){
-                if (item.nomeCliente == buscarNome){
-                    std::cout << "\nIngresso encontrado:" << std::endl;
-                    std::cout << "Nome: " << item.nomeCliente << std::endl;
-                    std::cout << "Preco: R$ " << item.preco << std::endl;
-                    std::cout << "Tipo: " << item.tipo << std::endl;
-                    encontrado = true;
-                    break;
-                }
-            }
-
-            if (!encontrado){
-                std::cout << "\nCliente nao encontrado na lista." << std::endl;
-            }
-
-        }
-    }
-}
-
-
+#include <string>
+#include "SistemaIngressos.h"
 
 int main(){
 
-    int seletor;
+    int seletor = 0;
+    SistemaIngressos sistema;
+    int opcao;
 
-    do{
-        std::cout << "1 - Sistema de Ingresso" << std::endl;
+    do{ 
+        std::cout << "\n====Menu====\n";
+        std::cout << "1 - Comprar Ingresso" << std::endl;
+        std::cout << "2 - Remover Ingresso por ID" << std::endl;
+        std::cout << "3 - Ver historico de compras" << std::endl;
+        std::cout << "4 - Ordenar Ingressos por ID (Bubble vs Quick)" << std::endl;
+        std::cout << "5 - Buscar Ingressos por ID (Sequencial vs Binaria)" << std::endl;
+        std::cout << "6 - Ver Historico de Acoes" << std::endl;
+        std::cout << "7 - Gerar Carga de Teste" << std::endl;
         std::cout << "0 - Sair" << std::endl;
+        std::cout << "Opcao: ";
         std::cin >> seletor;
+        std::cout << "\n";
 
         switch (seletor)
         {
-        case 1:
-            sistemaIngresso();
+        case 1: {
+            std::string nome;
+            std::string tipo;
+            double preco;
+            std::cin.ignore();
+            std::cout << "Nome do Cliente: ";
+            std::getline(std::cin, nome);
+
+            std::cout << "\nTipo de Ingresso\n"
+                         "1 - VIP (R$: 350.0)\n"
+                         "2 - Mezanino (R$: 280.0)\n"
+                         "3 - Pista (R$: 150.0)\n"
+                         "Opcao: ";
+            std::cin >> opcao;
+            std::cout << "\n";
+
+            if (opcao == 1) {
+                tipo = "VIP";
+                preco = 350.0;
+                sistema.comprarIngresso(nome, tipo, preco);
+                break;
+            }
+
+            if (opcao == 2) {
+                tipo = "Mezanino";
+                preco = 280.0;
+                sistema.comprarIngresso(nome, tipo,preco);
+                break;
+            }
+
+            if (opcao == 3) {
+                tipo = "Pista";
+                preco = 150.0;
+                sistema.comprarIngresso(nome,tipo,preco);
+            }
+            
+            break;
+        }
+
+        case 2:
+            int idRemover;
+            std::cout << "Digite o ID do ingresso que deseja remover: ";
+            std::cin >> idRemover;
+            sistema.removerID(idRemover);
+            break;
+
+        case 3:
+            sistema.exibirHistoricoCompras();
+            break;
+
+        case 4:
+            sistema.testarExibirOrdenacao();
+            break;
+
+        case 5:
+            int idBuscar;
+            std::cout << "Digite o ID do ingresso que deseja buscar: ";
+            std::cin >> idBuscar;
+            sistema.buscarID(idBuscar);
+            break;
+
+        case 6:
+            sistema.exibirHistoricoAcoes();
+            break;
+        
+        case 7: 
+            int qnt;
+            std::cout << "Quantos ingressos desordenados deseja gerar para o teste: ";
+            std::cin >> qnt;
+            sistema.gerarCarga(qnt);
             break;
 
         case 0:
